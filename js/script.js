@@ -15,13 +15,21 @@ let score = 0;
 let cameraX = 0;
 let cameraY = 0;
 
-// Define walls for the dungeon layout
+// Define walls for the dungeon layout to form a maze
 const walls = [
-    { x: 4 * boxSize, y: 2 * boxSize },
-    { x: 5 * boxSize, y: 2 * boxSize },
-    { x: 6 * boxSize, y: 2 * boxSize },
-    { x: 10 * boxSize, y: 10 * boxSize },
-    { x: 15 * boxSize, y: 5 * boxSize }
+    // Outer boundary
+    { x: 0, y: 0 }, { x: boxSize, y: 0 }, { x: 2 * boxSize, y: 0 }, { x: 3 * boxSize, y: 0 }, { x: 4 * boxSize, y: 0 },
+    { x: 0, y: boxSize }, { x: 0, y: 2 * boxSize }, { x: 0, y: 3 * boxSize }, { x: 0, y: 4 * boxSize },
+    { x: dungeonSize - boxSize, y: 0 }, { x: dungeonSize - boxSize, y: boxSize }, { x: dungeonSize - boxSize, y: 2 * boxSize },
+    { x: dungeonSize - boxSize, y: 3 * boxSize }, { x: dungeonSize - boxSize, y: 4 * boxSize },
+    
+    // Inner walls forming a maze
+    { x: 4 * boxSize, y: 2 * boxSize }, { x: 5 * boxSize, y: 2 * boxSize }, { x: 6 * boxSize, y: 2 * boxSize },
+    { x: 10 * boxSize, y: 10 * boxSize }, { x: 15 * boxSize, y: 5 * boxSize },
+    { x: 7 * boxSize, y: 8 * boxSize }, { x: 8 * boxSize, y: 8 * boxSize }, { x: 9 * boxSize, y: 8 * boxSize },
+    { x: 10 * boxSize, y: 8 * boxSize }, { x: 11 * boxSize, y: 8 * boxSize },
+    { x: 5 * boxSize, y: 6 * boxSize }, { x: 6 * boxSize, y: 6 * boxSize }, { x: 7 * boxSize, y: 6 * boxSize },
+    { x: 8 * boxSize, y: 6 * boxSize }, { x: 9 * boxSize, y: 6 * boxSize }
 ];
 
 // Key event listener
@@ -59,14 +67,6 @@ function updateGame() {
     for (let wall of walls) {
         if (head.x === wall.x && head.y === wall.y) {
             alert("Game Over! Collided with a wall!");
-            document.location.reload();
-        }
-    }
-
-    // Check for self-collision
-    for (let segment of snake) {
-        if (head.x === segment.x && head.y === segment.y) {
-            alert("Game Over!");
             document.location.reload();
         }
     }
@@ -110,7 +110,6 @@ function drawGame() {
     ctx.fillStyle = "red";
     ctx.fillRect(food.x, food.y, boxSize, boxSize);
 
-    // Restore original canvas state
     ctx.restore();
 
     // Draw score
