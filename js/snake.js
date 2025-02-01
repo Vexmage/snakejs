@@ -33,6 +33,6 @@ export function updateSnake(walls) {
     } else {
         snake.pop(); // Move snake
     }
-
+    console.log("Head position:", snake[0]);
     snake.unshift(head);
 }
